@@ -51,14 +51,7 @@ spec:
       imagePullSecrets:
 {{ toYaml . | nindent 8 }}
       {{- end }}
-{{- with $console.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | nindent 8 }}
-{{- end }}
-{{- with $console.tolerations }}
-      tolerations:
-{{ toYaml . | nindent 8 }}
-{{- end }}
+{{- include "centaur.podScheduling" $console }}
       initContainers:
         # Create the console logical databases on the bundled Postgres: the
         # primary plus the Solid Cache/Queue/Cable databases (see

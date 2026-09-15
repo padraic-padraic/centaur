@@ -106,6 +106,7 @@ console:
   # leave placement to the default scheduler.
   nodeSelector: {}
   #   workload: centaur-control-plane
+  affinity: {}
   tolerations: []
   # - key: centaur.ai/control-plane
   #   operator: Exists
@@ -213,6 +214,7 @@ console:
     # Node steering for Console background worker pods. Configure separately
     # from the web pods when workers run on a different node pool.
     nodeSelector: {}
+    affinity: {}
     tolerations: []
     resources: {}
   # Prometheus SQL Exporter for Console database metrics, initially Solid Queue.
@@ -451,6 +453,7 @@ apiRs:
   # placement to the default scheduler.
   nodeSelector: {}
   #   workload: centaur-control-plane
+  affinity: {}
   tolerations: []
   # - key: centaur.ai/control-plane
   #   operator: Exists
@@ -761,10 +764,13 @@ teamsbot:
 
 postgres:
   enabled: true
-  # Node selector for the PostgreSQL pod. When persistence is enabled, ensure
-  # the selected node pool can mount the configured storage class.
+  # Scheduling for the PostgreSQL pod. When persistence is enabled, ensure the
+  # selected node pool can mount the configured storage class. Changing these
+  # settings rolls the pod but does not delete its PVC.
   nodeSelector: {}
   #   workload: centaur-database
+  affinity: {}
+  tolerations: []
   image:
     repository: paradedb/paradedb
     tag: 0.23.0-pg16

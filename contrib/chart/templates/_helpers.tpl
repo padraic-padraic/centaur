@@ -178,6 +178,25 @@ namespace as this release, so a short DNS name is enough.
 {{- end -}}
 
 {{- /*
+Render the standard Kubernetes PodSpec scheduling fields supported by
+chart-managed workloads.
+*/ -}}
+{{- define "centaur.podScheduling" -}}
+{{- with .nodeSelector }}
+      nodeSelector:
+{{ toYaml . | nindent 8 }}
+{{- end }}
+{{- with .affinity }}
+      affinity:
+{{ toYaml . | nindent 8 }}
+{{- end }}
+{{- with .tolerations }}
+      tolerations:
+{{ toYaml . | nindent 8 }}
+{{- end }}
+{{- end -}}
+
+{{- /*
 console — Rails control plane (formerly "iron-control") for authenticated API
 access and encrypted secret storage. Required in-cluster ClusterIP Service.
 
