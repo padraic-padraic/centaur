@@ -182,18 +182,17 @@ Render the standard Kubernetes PodSpec scheduling fields supported by
 chart-managed workloads.
 */ -}}
 {{- define "centaur.podScheduling" -}}
-{{- with .nodeSelector }}
-      nodeSelector:
-{{ toYaml . | nindent 8 }}
-{{- end }}
-{{- with .affinity }}
-      affinity:
-{{ toYaml . | nindent 8 }}
-{{- end }}
-{{- with .tolerations }}
-      tolerations:
-{{ toYaml . | nindent 8 }}
-{{- end }}
+{{- $values := .values -}}
+{{- $indent := .indent -}}
+{{- with $values.nodeSelector -}}
+{{- printf "nodeSelector:\n%s" (toYaml . | indent 2) | nindent $indent }}
+{{- end -}}
+{{- with $values.affinity -}}
+{{- printf "affinity:\n%s" (toYaml . | indent 2) | nindent $indent }}
+{{- end -}}
+{{- with $values.tolerations -}}
+{{- printf "tolerations:\n%s" (toYaml . | indent 2) | nindent $indent }}
+{{- end -}}
 {{- end -}}
 
 {{- /*
